@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ user.username }}'s Profile</h2>
+<p>Email: {{ user.email }}</p>
+{% if user.skills %}
+    <h3>Skills</h3>
+    <ul>
+    {% for skill in user.skills %}
+        <li>{{ skill.title }}: {{ skill.description }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No skills listed yet.</p>
+{% endif %}
+<a href="{{ url_for('add_skill') }}">Add a Skill</a>
+{% endblock %}
+

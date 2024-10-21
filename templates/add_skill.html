@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Add Skill</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Skill</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <!-- Title Field -->
+            <div>
+                {{ form.title.label }}<br>
+                {{ form.title(size=32) }}<br>
+                {% for error in form.title.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            
+            <!-- Description Field -->
+            <div>
+                {{ form.description.label }}<br>
+                {{ form.description(rows=4, cols=40) }}<br>
+                {% for error in form.description.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            
+            <!-- Submit Button -->
+            <div>
+                {{ form.submit() }} <!-- Use the submit button defined in the form -->
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+

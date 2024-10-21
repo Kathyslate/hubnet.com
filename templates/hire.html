@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Hire Marketer</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.score.label }}<br>
+        {{ form.score(size=32) }}<br>
+        {% for error in form.score.errors %}
+            <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.comment.label }}<br>
+        {{ form.comment(cols=32, rows=4) }}<br>
+        {% for error in form.comment.errors %}
+            <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
+

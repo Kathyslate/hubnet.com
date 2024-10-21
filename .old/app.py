@@ -1,25 +1,16 @@
-from flask import Flask, render_template, redirect, url_for, flash
-from forms import ContactForm
+from flask import Flask
+from config import Config
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.config.from_object(Config)
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    form = ContactForm()
-    if form.validate_on_submit():
-        flash('Message sent successfully!', 'success')
-        return redirect(url_for('home'))
-    return render_template('contact.html', form=form)
-
-@app.route('/blog')
-def blog():
-    return render_template('blog.html')
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+from routes import *
 

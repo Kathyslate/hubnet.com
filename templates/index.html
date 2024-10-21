@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome to HubNet</h1>
+<h2>Available Digital Marketers</h2>
+<ul>
+    {% for marketer in marketers %}
+        <li>
+            <a href="{{ url_for('profile', user_id=marketer.id) }}">{{ marketer.username }}</a>
+            <a href="{{ url_for('hire', user_id=marketer.id) }}">Hire</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
