@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | My Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background */
+            color: #333; /* Dark text color */
+            font-family: Arial, sans-serif; /* Font style */
+        }
+
+        nav {
+            position: absolute; /* Positioning the navigation */
+            top: 20px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            padding: 1rem; /* Padding for the nav */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        nav a {
+            color: white; /* Text color for nav links */
+            text-decoration: none; /* No underline */
+            margin: 0 1rem; /* Space between links */
+            transition: color 0.3s ease; /* Smooth color change on hover */
+        }
+
+        nav a:hover {
+            color: #ff9999; /* Light peach color on hover */
+        }
+
+        .content {
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Column layout */
+            align-items: center; /* Center align items */
+            padding: 2rem; /* Padding around the content */
+        }
+
+        .image-container {
+            display: flex; /* Use flexbox for images and text */
+            align-items: center; /* Center align items vertically */
+            margin: 1rem 0; /* Margin for spacing */
+            width: 80%; /* Container width */
+            background-color: #fff; /* White background for image text area */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            padding: 1rem; /* Padding inside the container */
+        }
+
+        .image-container img {
+            width: 150px; /* Fixed width for images */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 1rem; /* Space between image and text */
+            border-radius: 4px; /* Rounded corners for images */
+        }
+
+        h1 {
+            font-size: 2.5rem; /* Large heading for About Us */
+            margin-bottom: 1rem; /* Space below the heading */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('about') }}">About Us</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('profile', user_id=current_user.id) }}">Profile</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+    </nav>
+
+    <div class="content">
+        <h1>About Us</h1>
+
+        <!-- Image 1 -->
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image1.jpg') }}" alt="Description of Image 1">
+            <div>Global Reach:
+
+HubNet connects clients with digital marketers from all over the world. Whether you're a small business looking for local expertise or a large corporation seeking international marketing strategies, HubNet provides access to a diverse pool of professionals.</div>
+        </div>
+
+        <!-- Image 2 -->
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image2.jpg') }}" alt="Description of Image 2">
+            <div>Stress Reduction:
+
+Clients often face challenges in finding trustworthy digital marketers. HubNet alleviates this stress by providing a transparent platform where clients can easily browse profiles, view portfolios, and make informed decisions without the worry of fraud.</div>
+        </div>
+
+        <!-- Image 3 -->
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image3.jpg') }}" alt="Description of Image 3">
+            <div>Time and Cost Efficiency:
+
+By utilizing HubNet, clients can save valuable time and money. Our platform streamlines the search and hiring process, allowing clients to quickly find marketers who fit their budget and project requirements, thus avoiding lengthy and costly trial-and-error hiring processes.
+</div>
+        </div>
+
+        <!-- Image 4 -->
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image4.jpg') }}" alt="Description of Image 4">
+            <div>Accountability and Trust:
+
+One of the standout features of HubNet is our rating and review system. Clients can leave feedback about their experiences with marketers, fostering a community of accountability. This transparency encourages marketers to deliver high-quality work, knowing their reputation is on the line.
+</div>
+        </div>
+
+        <!-- Image 5 -->
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image5.jpg') }}" alt="Description of Image 5">
+            <div>Payment Security:
+
+HubNet protects clients by holding payments until the job is completed to satisfaction. If there is any foul play or if the project does not meet the agreed-upon standards, clients can feel secure knowing they won't be charged unfairly. This policy not only safeguards client investments but also motivates marketers to perform their best.</div>
+        </div>
+
+        <!-- Image 6 -->
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image6.jpg') }}" alt="Description of Image 6">
+            <div>Customer Satisfaction:
+
+At HubNet, we prioritize customer happiness. By providing a platform that ensures quality work and fosters good communication, clients consistently leave satisfied. The ability to rate and review marketers also helps build a community where the best professionals can thrive, leading to improved service overall.</div>
+        </div>
+    </div>HubNet is not just a platform; it’s a community dedicated to fostering positive connections between digital marketers and clients. By prioritizing transparency, accountability, and client satisfaction, we empower both marketers and clients to achieve their goals with confidence and ease. Join us at HubNet and discover a seamless way to connect with digital marketing professionals who can elevate your business.</div>
+    </div>
+</body>
+</html>
+
