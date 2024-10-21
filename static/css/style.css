@@ -1,27 +1,41 @@
+/* General Body Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #ffcccb; /* Peach background */
+    color: #333; /* Dark text color for readability */
 }
 
+/* Navigation Styles */
 nav {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #fff; /* White for navigation background */
+    color: #fff; /* Dark text for navigation items */
     padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 nav a {
-    color: #fff;
+    color: #333; /* Black color for links */
     padding: 0.5rem;
     text-decoration: none;
     margin-right: 1rem;
+    transition: color 0.3s ease; /* Smooth color change on hover */
 }
 
+nav a:hover {
+    color: #ff9999; /* Light peach color on hover */
+}
+
+/* Container Styles */
 .container {
     padding: 2rem;
+    background-color: #ffcccb; /* peach background for content area */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
 }
 
+/* Alert Box Styles */
 .alert {
     margin: 10px 0;
     padding: 10px;
@@ -29,12 +43,51 @@ nav a {
 }
 
 .alert-success {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: #cce5ff; /* Light blue for success alerts */
+    color: #333; /* Dark text for contrast */
 }
 
 .alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: #f8d7da; /* Light red for error alerts */
+    color: #333; /* Dark text for visibility */
+}
+
+/* Form Styles */
+form {
+    background-color: #fff; /* White background for forms */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside input */
+    margin: 8px 0; /* Space between inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+/* Button Styles */
+button {
+    background-color: #ff9999; /* Light peach background for buttons */
+    color: #333; /* Dark text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+button:hover {
+    background-color: #ff6666; /* Darker peach on hover */
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #333; /* Dark color for headings */
 }
 
