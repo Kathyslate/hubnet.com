@@ -2,40 +2,69 @@
 
 {% block content %}
 <h2>Register</h2>
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>There were errors with your submission:</strong>
+        <ul>
+            {% for field, errors in form.errors.items() %}
+                {% for error in errors %}
+                    <li>{{ field }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
 <form method="POST">
     {{ form.hidden_tag() }}
-    <p>
-        {{ form.username.label }}<br>
-        {{ form.username(size=32) }}<br>
+
+    <div class="form-group">
+        {{ form.username.label(class="form-label") }}<br>
+        {{ form.username(class="form-control", size=32, placeholder='Enter your username') }}<br>
         {% for error in form.username.errors %}
             <span style="color:red;">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <p>
-        {{ form.email.label }}<br>
-        {{ form.email(size=32) }}<br>
+    </div>
+
+    <div class="form-group">
+        {{ form.email.label(class="form-label") }}<br>
+        {{ form.email(class="form-control", size=32, placeholder='you@example.com') }}<br>
         {% for error in form.email.errors %}
             <span style="color:red;">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <p>
-        {{ form.password.label }}<br>
-        {{ form.password(size=32) }}<br>
+    </div>
+
+    <div class="form-group">
+        {{ form.password.label(class="form-label") }}<br>
+        {{ form.password(class="form-control", size=32, placeholder='Create a password') }}<br>
         {% for error in form.password.errors %}
             <span style="color:red;">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <p>
-        {{ form.confirm_password.label }}<br>
-        {{ form.confirm_password(size=32) }}<br>
+    </div>
+
+    <div class="form-group">
+        {{ form.confirm_password.label(class="form-label") }}<br>
+        {{ form.confirm_password(class="form-control", size=32, placeholder='Confirm your password') }}<br>
         {% for error in form.confirm_password.errors %}
             <span style="color:red;">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <p>
-        {{ form.is_marketer.label }} {{ form.is_marketer() }}<br>
-    </p>
-    <p>{{ form.submit() }}</p>
+    </div>
+
+    <div class="form-group form-check">
+        {{ form.is_marketer.label(class="form-check-label") }} {{ form.is_marketer(class="form-check-input") }}<br>
+        <small>Check this box if you are a digital marketer.</small>
+    </div>
+
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
 </form>
+
+{% if success_message %}
+    <div class="alert alert-success">
+        {{ success_message }}
+    </div>
+{% endif %}
 {% endblock %}
 

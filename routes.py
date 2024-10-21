@@ -13,13 +13,24 @@ def index():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        # Check for existing username or email
+        existing_user = User.query.filter((User.username == form.username.data) | 
+                                           (User.email == form.email.data)).first()
+        if existing_user:
+            flash('Username or email already exists. Please choose a different one.', 'danger')
+            return redirect(url_for('register'))
+
+        # Create new user
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         user.is_marketer = form.is_marketer.data
+        
         db.session.add(user)
         db.session.commit()
+
         flash('Your account has been created! You can now log in.', 'success')
         return redirect(url_for('login'))
+
     return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -31,7 +42,8 @@ def login():
             login_user(user)
             return redirect(url_for('index'))
         else:
-            flash('Login unsuccessful. Please check email and password', 'danger')
+            flash('Login unsuccessful. Please check your email and password', 'danger')
+    
     return render_template('login.html', form=form)
 
 @app.route('/logout')
@@ -41,6 +53,7 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/profile/<int:user_id>')
+@login_required
 def profile(user_id):
     user = User.query.get_or_404(user_id)
     return render_template('profile.html', user=user)
@@ -55,6 +68,7 @@ def hire(user_id):
         db.session.commit()
         flash('Thank you for your feedback!', 'success')
         return redirect(url_for('index'))
+    
     return render_template('hire.html', form=form)
 
 @app.route('/add_skill', methods=['GET', 'POST'])
@@ -67,5 +81,6 @@ def add_skill():
         db.session.commit()
         flash('Skill added successfully!', 'success')
         return redirect(url_for('profile', user_id=current_user.id))
+    
     return render_template('add_skill.html', form=form)
 

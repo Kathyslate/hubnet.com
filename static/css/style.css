@@ -3,20 +3,20 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffcccb; /* Peach background */
+    background-color: #cceeff; /* Light blue background */
     color: #333; /* Dark text color for readability */
 }
 
 /* Navigation Styles */
 nav {
-    background-color: #fff; /* White for navigation background */
-    color: #fff; /* Dark text for navigation items */
+    background-color: #000; /* Black for navigation background */
+    color: #fff; /* White text for navigation items */
     padding: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Slightly darker shadow for depth */
 }
 
 nav a {
-    color: #333; /* Black color for links */
+    color: #fff; /* White color for links */
     padding: 0.5rem;
     text-decoration: none;
     margin-right: 1rem;
@@ -24,13 +24,13 @@ nav a {
 }
 
 nav a:hover {
-    color: #ff9999; /* Light peach color on hover */
+    color: #4da6ff; /* Deeper blue color on hover */
 }
 
 /* Container Styles */
 .container {
     padding: 2rem;
-    background-color: #ffcccb; /* peach background for content area */
+    background-color: #fff; /* White background for content area */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
 }
@@ -43,7 +43,7 @@ nav a:hover {
 }
 
 .alert-success {
-    background-color: #cce5ff; /* Light blue for success alerts */
+    background-color: #b3e0ff; /* Light blue for success alerts */
     color: #333; /* Dark text for contrast */
 }
 
@@ -73,8 +73,8 @@ input[type="password"] {
 
 /* Button Styles */
 button {
-    background-color: #ff9999; /* Light peach background for buttons */
-    color: #333; /* Dark text */
+    background-color: #0056b3; /* Deeper blue background for buttons */
+    color: #fff; /* White text */
     border: none; /* No border */
     padding: 10px 20px; /* Padding */
     border-radius: 5px; /* Rounded corners */
@@ -83,11 +83,11 @@ button {
 }
 
 button:hover {
-    background-color: #ff6666; /* Darker peach on hover */
+    background-color: #004494; /* Darker blue on hover */
 }
 
 /* Headings */
 h1, h2, h3 {
-    color: #333; /* Dark color for headings */
+    color: #000; /* Black color for headings */
 }
 

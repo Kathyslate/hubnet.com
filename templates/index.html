@@ -1,15 +1,50 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | My Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}"); /* Ensure you have an image named background.jpg in your static folder */
+            background-size: cover; /* Cover the whole screen */
+            background-position: center; /* Center the image */
+            height: 100vh; /* Full height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white; /* Change text color to white for better visibility */
+            text-align: center; /* Center align the text */
+        }
 
-{% block content %}
-<h1>Welcome to HubNet</h1>
-<h2>Available Digital Marketers</h2>
-<ul>
-    {% for marketer in marketers %}
-        <li>
-            <a href="{{ url_for('profile', user_id=marketer.id) }}">{{ marketer.username }}</a>
-            <a href="{{ url_for('hire', user_id=marketer.id) }}">Hire</a>
-        </li>
-    {% endfor %}
-</ul>
-{% endblock %}
+        h1 {
+            font-size: 10rem; /* Large header */
+            margin: 0; /* Remove default margin */
+        }
+
+        .logo-note {
+            font-size: 2rem; /* Smaller font for the logo note */
+            margin-top: 0.5rem; /* Space above the note */
+        }
+    </style>
+</head>
+<body>
+    <h1>HubNet</h1>
+    <div class="logo-note">Your one stop solution to all digital marketing needs</div>
+    
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+	<a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('profile', user_id=current_user.id) }}">Profile</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+    </nav>
+</body>
+</html>
 
