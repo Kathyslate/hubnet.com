@@ -1,18 +1,167 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{{ user.username }}'s Profile</h2>
-<p>Email: {{ user.email }}</p>
-{% if user.skills %}
-    <h3>Skills</h3>
-    <ul>
-    {% for skill in user.skills %}
-        <li>{{ skill.title }}: {{ skill.description }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No skills listed yet.</p>
-{% endif %}
-<a href="{{ url_for('add_skill') }}">Add a Skill</a>
+<div class="profile-container">
+    <h1>{{ user.username }}'s Profile</h1>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Account Type:</strong> {{ 'Digital Marketer' if user.is_digital_marketer else 'Client' }}</p>
+
+    {% if user.is_digital_marketer %}
+        <section class="digital-marketer-profile">
+            <h2>About Me</h2>
+            <p>{{ user.notes }}</p>  <!-- Field for notes -->
+
+            <h2>Skills</h2>
+            {% if user.skills %}
+                <ul>
+                    {% for skill in user.skills %}
+                        <li>{{ skill.title }}: {{ skill.description }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No skills listed yet.</p>
+            {% endif %}
+
+            <h2>Portfolio</h2>
+            <div class="portfolio">
+                {% if user.videos %}
+                    <h3>Videos</h3>
+                    {% for video in user.videos %}
+                        <video controls>
+                            <source src="{{ video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endfor %}
+                {% else %}
+                    <p>No videos uploaded yet.</p>
+                {% endif %}
+                
+                {% if user.images %}
+                    <h3>Images</h3>
+                    <div class="image-gallery">
+                        {% for image in user.images %}
+                            <img src="{{ image.url }}" alt="Portfolio Image" class="portfolio-image" />
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No images uploaded yet.</p>
+                {% endif %}
+            </div>
+
+            <h2>Performance</h2>
+            <p><strong>Rating:</strong> {{ user.rating }}</p>  <!-- Field for rating -->
+            <p><strong>Views:</strong> {{ user.views_count }}</p>  <!-- Field for views -->
+
+            <h2>Pending Jobs</h2>
+            {% if user.pending_jobs %}
+                <ul>
+                    {% for job in user.pending_jobs %}
+                        <li>{{ job.title }} - 
+                            <a href="{{ url_for('accept_job', job_id=job.id) }}">Accept</a> | 
+                            <a href="{{ url_for('reject_job', job_id=job.id) }}">Reject</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No pending jobs.</p>
+            {% endif %}
+
+            <h2>Experience</h2>
+            <p>{{ user.experience_years }} years</p>  <!-- Field for experience -->
+
+            <form action="{{ url_for('request_payment') }}" method="POST">
+                <button type="submit">Request Payment</button>
+            </form>
+        </section>
+    {% else %}
+        <section class="client-profile">
+            <h2>Available Digital Marketers</h2>
+            {% if digital_marketers %}
+                <ul>
+                    {% for marketer in digital_marketers %}
+                        <li>
+                            <a href="{{ url_for('profile', user_id=marketer.id) }}">{{ marketer.username }}</a> - 
+                            {{ marketer.skills_count }} skills
+                            <form action="{{ url_for('offer_project', marketer_id=marketer.id) }}" method="POST" style="display:inline;">
+                                <button type="submit">Offer Project</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No digital marketers available at the moment.</p>
+            {% endif %}
+
+            <h2>Previous Projects</h2>
+            {% if user.previous_projects %}
+                <ul>
+                    {% for project in user.previous_projects %}
+                        <li>{{ project.title }} - <a href="{{ url_for('view_project', project_id=project.id) }}">View</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No previous projects found.</p>
+            {% endif %}
+
+            <h2>Comments</h2>
+            <form action="{{ url_for('post_comment') }}" method="POST">
+                <textarea name="comment" placeholder="Leave a comment..." required></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
+        </section>
+    {% endif %}
+</div>
+
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    h1, h2 {
+        color: #333;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        padding: 8px 0;
+    }
+
+    .portfolio-image {
+        width: 100px; /* Adjust as needed */
+        height: auto;
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .image-gallery {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    textarea {
+        width: 100%;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        cursor: pointer;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>
 {% endblock %}
 

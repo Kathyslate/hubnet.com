@@ -1,8 +1,62 @@
-from flask import render_template, url_for, flash, redirect
-from app import app, db
-from forms import RegistrationForm, LoginForm, SkillForm, RatingForm
-from models import User, Skill, Rating
-from flask_login import login_user, logout_user, current_user, login_required
+from flask import request, render_template, flash, redirect, url_for
+from flask_mail import Message
+from flask_login import logout_user
+from flask_login import login_required
+from datetime import datetime, timedelta
+import secrets
+from forms import RegistrationForm, LoginForm
+from flask_login import login_user
+from app import app, mail, db  # Ensure you're importing mail and db correctly
+from models import User  # Import the User model to interact with the database
+from forms import ForgotPasswordForm  # Ensure you have this form defined
+
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    form = ForgotPasswordForm()  # Create an instance of your forgot password form
+
+    if form.validate_on_submit():  # Validate form submission
+        email = form.email.data  # Get the email from the form
+        
+        # Check if the user exists
+        user = User.query.filter_by(email=email).first()  # Ensure the user exists
+        if user:
+            # Generate a token and set expiration
+            token = secrets.token_urlsafe()
+            expiration = datetime.utcnow() + timedelta(hours=1)  # Token valid for 1 hour
+
+            # Store token and expiration in database associated with the user
+            user.reset_token = token  # Assuming you have a column for reset tokens
+            user.token_expiration = expiration  # And for expiration
+            db.session.commit()  # Commit the changes
+
+            # Send email with reset link
+            reset_link = url_for('reset_password', token=token, _external=True)
+            msg = Message('Password Reset Request', recipients=[email])
+            msg.body = f'Please click the following link to reset your password: {reset_link}'
+            mail.send(msg)
+
+            flash('A password reset link has been sent to your email.')
+            return redirect(url_for('login'))
+        else:
+            flash('No account found with that email address.')  # Handle case where user does not exist
+
+    return render_template('forgot_password.html', form=form)  # Pass the form to the template
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if request.method == 'POST':
+        new_password = request.form['new_password']
+        # Verify the token and expiration
+        # Example: user = db.verify_reset_token(token)
+        # if user is None: return 'Invalid or expired token'
+
+        # Update the user's password in the database
+        # Example: db.update_password(user.id, new_password)
+        
+        flash('Your password has been updated!')
+        return redirect(url_for('login'))
+    
+    return render_template('reset_password.html', token=token)
 
 @app.route('/')
 def index():
@@ -33,6 +87,20 @@ def register():
 
     return render_template('register.html', form=form)
 
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/privacy_policy')
+def privacy_policy():
+    return render_template('privacy_policy.html')
+
+@app.route('/logout')
+def logout():
+    logout_user()  # This logs the user out
+    flash('You have been logged out.', 'info')  # Optionally, provide feedback
+    return redirect(url_for('login'))  # Redirect to the login page or home
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -40,7 +108,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for('profile', user_id=user.id))
         else:
             flash('Login unsuccessful. Please check your email and password', 'danger')
     
@@ -54,17 +122,20 @@ def about():
 def contact():
     return render_template('contact.html')
 
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
-
 @app.route('/profile/<int:user_id>')
 @login_required
 def profile(user_id):
     user = User.query.get_or_404(user_id)
-    return render_template('profile.html', user=user)
+    
+    if user.is_digital_marketer:
+        # Fetch additional data for digital marketers
+        videos = Video.query.filter_by(user_id=user_id).all()
+        images = Image.query.filter_by(user_id=user_id).all()
+        return render_template('profile.html', user=user, videos=videos, images=images)
+    else:
+        # Fetch digital marketers for clients
+        digital_marketers = User.query.filter_by(is_digital_marketer=True).all()
+        return render_template('profile.html', user=user, digital_marketers=digital_marketers)
 
 @app.route('/hire/<int:user_id>', methods=['GET', 'POST'])
 @login_required

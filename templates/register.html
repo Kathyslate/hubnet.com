@@ -1,70 +1,225 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | HubNet</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("{{ url_for('static', filename='loginbackground.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
 
-{% block content %}
-<h2>Register</h2>
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
 
-{% if form.errors %}
-    <div class="alert alert-danger">
-        <strong>There were errors with your submission:</strong>
-        <ul>
-            {% for field, errors in form.errors.items() %}
-                {% for error in errors %}
-                    <li>{{ field }}: {{ error }}</li>
+        /* Form Styles */
+        form {
+            background-color: rgba(0, 0, 0, 0.75); /* Transparent form background */
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        input, .form-check-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .form-check-input {
+            width: auto;
+            display: inline-block;
+        }
+
+        .form-check-label {
+            display: inline-block;
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .alert {
+            background-color: #ff6666;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert ul {
+            padding-left: 1rem;
+        }
+
+        .alert-success {
+            background-color: #28a745;
+        }
+
+        .btn-primary {
+            background-color: #ff9999;
+            color: white;
+            padding: 0.75rem;
+            font-size: 1.2rem;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff6666;
+        }
+
+        /* Nav Styles */
+        nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff9999;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            form {
+                padding: 1.5rem;
+                max-width: 350px;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            form {
+                padding: 1rem;
+                max-width: 300px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('about') }}">About Us</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+
+    <div class="container">
+        <h2>Create an Account</h2>
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Please correct the following errors:</strong>
+            <ul>
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
+            </ul>
+        </div>
+        {% endif %}
 
-<form method="POST">
-    {{ form.hidden_tag() }}
+        <form method="POST">
+            {{ form.hidden_tag() }}
 
-    <div class="form-group">
-        {{ form.username.label(class="form-label") }}<br>
-        {{ form.username(class="form-control", size=32, placeholder='Enter your username') }}<br>
-        {% for error in form.username.errors %}
-            <span style="color:red;">[{{ error }}]</span>
-        {% endfor %}
-    </div>
+            <div class="form-group">
+                {{ form.username.label() }}
+                {{ form.username(class="form-control", placeholder="Enter your username") }}
+                {% for error in form.username.errors %}
+                    <span style="color:red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
 
-    <div class="form-group">
-        {{ form.email.label(class="form-label") }}<br>
-        {{ form.email(class="form-control", size=32, placeholder='you@example.com') }}<br>
-        {% for error in form.email.errors %}
-            <span style="color:red;">[{{ error }}]</span>
-        {% endfor %}
-    </div>
+            <div class="form-group">
+                {{ form.email.label() }}
+                {{ form.email(class="form-control", placeholder="you@example.com") }}
+                {% for error in form.email.errors %}
+                    <span style="color:red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
 
-    <div class="form-group">
-        {{ form.password.label(class="form-label") }}<br>
-        {{ form.password(class="form-control", size=32, placeholder='Create a password') }}<br>
-        {% for error in form.password.errors %}
-            <span style="color:red;">[{{ error }}]</span>
-        {% endfor %}
-    </div>
+            <div class="form-group">
+                {{ form.password.label() }}
+                {{ form.password(class="form-control", placeholder="Create a password") }}
+                {% for error in form.password.errors %}
+                    <span style="color:red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
 
-    <div class="form-group">
-        {{ form.confirm_password.label(class="form-label") }}<br>
-        {{ form.confirm_password(class="form-control", size=32, placeholder='Confirm your password') }}<br>
-        {% for error in form.confirm_password.errors %}
-            <span style="color:red;">[{{ error }}]</span>
-        {% endfor %}
-    </div>
+            <div class="form-group">
+                {{ form.confirm_password.label() }}
+                {{ form.confirm_password(class="form-control", placeholder="Confirm your password") }}
+                {% for error in form.confirm_password.errors %}
+                    <span style="color:red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
 
-    <div class="form-group form-check">
-        {{ form.is_marketer.label(class="form-check-label") }} {{ form.is_marketer(class="form-check-input") }}<br>
-        <small>Check this box if you are a digital marketer.</small>
-    </div>
+            <div class="form-group form-check">
+                {{ form.is_marketer(class="form-check-input") }}
+                {{ form.is_marketer.label(class="form-check-label") }}
+                <small>Check this box if you are a digital marketer.</small>
+            </div>
 
-    <div class="form-group">
-        {{ form.submit(class="btn btn-primary") }}
-    </div>
-</form>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
 
-{% if success_message %}
-    <div class="alert alert-success">
-        {{ success_message }}
+        {% if success_message %}
+            <div class="alert alert-success">
+                {{ success_message }}
+            </div>
+        {% endif %}
     </div>
-{% endif %}
-{% endblock %}
+</body>
+</html>
 
