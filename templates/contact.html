@@ -1,190 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Contact Us | My Website</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-		<style>
-body {
-	margin: 0;
-	padding: 0;
-	font-family: Arial, sans-serif;
-}
-	header {
-		position: relative; /* Allows absolute positioning of the image */
-		text-align: center;
-		padding: 50px 0;
-		background-color: #f4f4f4; /* Fallback color */
-		overflow: hidden; /* Prevents overflow of the image */
-	}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | My Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        header {
+            position: relative;
+            text-align: center;
+            padding: 50px 0;
+            background-color: #f4f4f4; /* Fallback color */
+            overflow: hidden;
+        }
+        header img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            text-align: center;
+            position: relative; /* Optional for z-index adjustment */
+            z-index: 1; /* Ensure navigation is above the header image */
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .contact-section {
+            display: flex;
+            justify-content: space-around; /* Changed to space-around */
+            align-items: flex-start;
+            padding: 50px;
+            background-color: #fff;
+        }
+        .contact-info {
+            flex: 1;
+            margin-right: 50px;
+        }
+        .contact-info h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .contact-info p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .social-media {
+            margin-top: 20px;
+        }
+        .social-media a {
+            margin-right: 10px;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        .social-media a:hover {
+            background-color: #0056b3;
+        }
+        .contact-form {
+            flex: 1;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .contact-form h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .contact-form input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .contact-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
 
-	header img {
-		position: absolute; /* Position the image absolutely */
-		top: 0; /* Aligns the image to the top */
-		left: 0; /* Aligns the image to the left */
-		width: 100%; /* Makes the image take the full width */
-		height: 100%; /* Makes the image take the full height of the header */
-		object-fit: cover; /* Ensures the image covers the area, maintaining aspect ratio */
-		z-index: -1; /* Sends the image behind the text */
-	}
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('about') }}">About Us</a>
+    </nav>
 
-	.contact-section {
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
-		padding: 50px;
-		background-color: #fff;
-	}
+    <header>
+        <img src="{{ url_for('static', filename='contactheader.jpg') }}" alt="Contact Us">
+    </header>
 
-	.contact-info {
-		flex: 1;
-		margin-right: 50px;
-	}
+    <section class="contact-section">
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p><strong>Address:</strong> 123 Digital Marketer Avenue, HubCity, HC 12345</p>
+            <p><strong>Phone:</strong> +1 (123) 456-7890</p>
+            <p><strong>Email:</strong> contact@hubnet.com</p>
 
-	.contact-info h3 {
-		margin-bottom: 20px;
-		font-size: 1.5rem;
-		color: #333;
-	}
+            <!-- Social Media Links -->
+            <div class="social-media">
+                <h3>Follow Us</h3>
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
 
-	.contact-info p {
-		font-size: 1.1rem;
-		margin-bottom: 20px;
-	}
+        <!-- Contact Form -->
+        <div class="contact-form">
+            <h3>Get in Touch</h3>
+            <form method="POST">
+                {{ form.hidden_tag() }}
 
-	.social-media {
-		margin-top: 20px;
-	}
+                <label for="name">Your Name</label>
+                {{ form.name(size=32, placeholder="Enter your name") }}
+                {% for error in form.name.errors %}
+                <span style="color:red;">[{{ error }}]</span>
+                {% endfor %}
 
-	.social-media a {
-		margin-right: 10px;
-		display: inline-block;
-		width: 40px;
-		height: 40px;
-		line-height: 40px;
-		background-color: #007BFF;
-		color: white;
-		text-align: center;
-		border-radius: 50%;
-		transition: background-color 0.3s ease;
-	}
+                <label for="email">Your Email</label>
+                {{ form.email(size=32, placeholder="Enter your email") }}
+                {% for error in form.email.errors %}
+                <span style="color:red;">[{{ error }}]</span>
+                {% endfor %}
 
-	.social-media a:hover {
-		background-color: #0056b3;
-	}
+                <label for="message">Your Message</label>
+                {{ form.message(cols=30, rows=5, placeholder="Write your message here") }}
+                {% for error in form.message.errors %}
+                <span style="color:red;">[{{ error }}]</span>
+                {% endfor %}
 
-	.contact-form {
-		flex: 1;
-		background-color: #f9f9f9;
-		padding: 30px;
-		border-radius: 10px;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	}
+                <input type="submit" value="Send Message">
+            </form>
+        </div>
+    </section>
 
-	.contact-form h3 {
-		margin-bottom: 20px;
-		font-size: 1.5rem;
-		color: #333;
-	}
+    <footer>
+        <p>&copy; 2024 HubNet. All rights reserved.</p>
+    </footer>
 
-	.contact-form label {
-		display: block;
-		margin-bottom: 5px;
-		color: #333;
-	}
-
-	.contact-form input,
-	.contact-form textarea {
-		width: 100%;
-		padding: 10px;
-		margin-bottom: 20px;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		font-size: 1rem;
-	}
-
-	.contact-form input[type="submit"] {
-		background-color: #007BFF;
-		color: white;
-		border: none;
-		cursor: pointer;
-		transition: background-color 0.3s ease;
-	}
-
-	.contact-form input[type="submit"]:hover {
-		background-color: #0056b3;
-	}
-
-	footer {
-		background-color: #333;
-		color: white;
-		text-align: center;
-		padding: 20px 0;
-	}
-
-	footer p {
-		margin: 0;
-	}
-		</style>
-	</head>
-	<body>
-
-		<header>
-			<img src="{{ url_for('static', filename='contactheader.jpg') }}" alt="Contact Us">
-		</header>
-
-		<section class="contact-section">
-			<!-- Contact Information -->
-			<div class="contact-info">
-				<h3>Contact Information</h3>
-				<p><strong>Address:</strong> 123 Digital Marketer Avenue, HubCity, HC 12345</p>
-				<p><strong>Phone:</strong> +1 (123) 456-7890</p>
-				<p><strong>Email:</strong> contact@hubnet.com</p>
-
-				<!-- Social Media Links -->
-				<div class="social-media">
-					<h3>Follow Us</h3>
-					<a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a> <!-- Facebook -->
-					<a href="#" target="_blank"><i class="fab fa-twitter"></i></a> <!-- Twitter -->
-					<a href="#" target="_blank"><i class="fab fa-instagram"></i></a> <!-- Instagram -->
-					<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a> <!-- LinkedIn -->
-				</div>
-			</div>
-
-			<!-- Contact Form -->
-			<div class="contact-form">
-				<h3>Get in Touch</h3>
-				<form method="POST">
-					{{ form.hidden_tag() }}
-
-					<label for="name">Your Name</label>
-					{{ form.name(size=32, placeholder="Enter your name") }}
-					{% for error in form.name.errors %}
-					<span style="color:red;">[{{ error }}]</span>
-					{% endfor %}
-
-					<label for="email">Your Email</label>
-					{{ form.email(size=32, placeholder="Enter your email") }}
-					{% for error in form.email.errors %}
-					<span style="color:red;">[{{ error }}]</span>
-					{% endfor %}
-
-					<label for="message">Your Message</label>
-					{{ form.message(cols=30, rows=5, placeholder="Write your message here") }}
-					{% for error in form.message.errors %}
-					<span style="color:red;">[{{ error }}]</span>
-					{% endfor %}
-
-					<input type="submit" value="Send Message">
-				</form>
-			</div>
-		</section>
-
-		<footer>
-			<p>&copy; 2024 HubNet. All rights reserved.</p>
-		</footer>
-
-	</body>
+</body>
 </html>
 

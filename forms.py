@@ -29,3 +29,9 @@ class RatingForm(FlaskForm):
 class ForgotPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Send Reset Link')
+
+class ContactForm(FlaskForm):
+    name = StringField('Your Name', validators=[DataRequired()])
+    email = StringField('Your Email', validators=[DataRequired(), Email()])
+    message = TextAreaField('Your Message', validators=[DataRequired()])
+    submit = SubmitField('Send Message')

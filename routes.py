@@ -1,6 +1,7 @@
 from flask import request, render_template, flash, redirect, url_for
 from flask_mail import Message
 from flask_login import logout_user
+from forms import ContactForm
 from flask_login import login_required
 from datetime import datetime, timedelta
 import secrets
@@ -118,9 +119,17 @@ def login():
 def about():
     return render_template('about.html')
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    return render_template('contact.html')
+    form = ContactForm()  # Instantiate the form
+
+    # Check if the form is submitted and validated
+    if form.validate_on_submit():
+        # Handle form submission (e.g., send email or save the message)
+        pass  # Add your submission logic here
+
+    # Render the template with the form
+    return render_template('contact.html', form=form)
 
 @app.route('/profile/<int:user_id>')
 @login_required

@@ -22,7 +22,12 @@
         }
 
         h2 {
-            font-size: 3rem;
+            font-size: 2.5rem; /* Adjusted size */
+            margin-bottom: 1rem;
+        }
+
+        .create-account {
+            font-size: 1.5rem; /* Font size for "Create an Account" text */
             margin-bottom: 1rem;
         }
 
@@ -30,7 +35,7 @@
             background-color: rgba(255, 255, 255, 0.2); /* Transparent background */
             padding: 20px;
             border-radius: 10px;
-            max-width: 400px;
+            max-width: 350px; /* Reduced width */
             width: 100%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
@@ -140,7 +145,7 @@
         <a href="{{ url_for('contact') }}">Contact</a>
     </nav>
 
-    <h2>Register</h2>
+    <h2 class="create-account">Create an Account</h2> <!-- Added text above form -->
 
     <form method="POST">
         {{ form.hidden_tag() }}
